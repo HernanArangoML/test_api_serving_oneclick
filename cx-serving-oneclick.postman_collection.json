@@ -1,0 +1,823 @@
+{
+	"info": {
+		"_postman_id": "cfa43d17-dd4b-4428-aeaa-021d9919e16c",
+		"name": "cx-serving-oneclick",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "tests",
+			"item": [
+				{
+					"name": "msv true - 2da vez",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Msv is true\", function () {",
+									"    pm.expect(jsonData.features.msv.is_msv).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Ask by agent is false\", function () {",
+									"    pm.expect(jsonData.features.msv.is_ask_by_agent).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"Msv second call\", function () {",
+									"    pm.expect(jsonData.features.msv.first_message).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"no msv errors\", function () {",
+									"    pm.expect(jsonData.features.msv.error).to.eql(null);",
+									"});",
+									"",
+									"pm.test(\"source is content_ids_burned\", function () {",
+									"    pm.expect(jsonData.source).to.eql(\"content_ids_burned\");",
+									"});",
+									"",
+									"pm.test(\"There is not fda prediction\", function () {",
+									"    pm.expect(jsonData.features.fda_prediction).to.be.equal(undefined)",
+									"});",
+									"",
+									"pm.test(\"serving return content_ids [23942, 23949, 23947, 23955, 23965]\", function () {",
+									"    pm.expect(jsonData.content_ids[0]);",
+									"    content_ids = jsonData.content_ids",
+									"    burned_ids = [23942, 23949, 23947, 23955, 23965]",
+									"    for (i=0; content_ids.length > i; i++){",
+									"        pm.expect(content_ids[i]).to.be.equal(burned_ids[i])",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"No errors Serving\", function () {",
+									"    pm.expect(Object.keys(jsonData.errors).length).to.equal(0);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-tiger-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 260899898,\n    \"user_text\": \"webtoken\",\n    \"case_data\": {\n        \"payment_id\": 18660355797, \n        \"chat_id\": \"103434643634654454598706590\"\n    }\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_test_serving}}/cx-mld/oneclick/process?site_id=mlb",
+							"host": [
+								"{{url_test_serving}}"
+							],
+							"path": [
+								"cx-mld",
+								"oneclick",
+								"process"
+							],
+							"query": [
+								{
+									"key": "site_id",
+									"value": "mlb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "msv true - 1ra vez",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Msv is true\", function () {",
+									"    pm.expect(jsonData.features.msv.is_msv).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Ask by agent is false\", function () {",
+									"    pm.expect(jsonData.features.msv.is_ask_by_agent).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"Msv is first call\", function () {",
+									"    pm.expect(jsonData.features.msv.first_message).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"serving return content_ids [23942, 23949, 23947, 23955, 23965]\", function () {",
+									"    pm.expect(jsonData.content_ids[0]);",
+									"    content_ids = jsonData.content_ids",
+									"    burned_ids = [23942, 23949, 23947, 23955, 23965]",
+									"    for (i=0; content_ids.length > i; i++){",
+									"        pm.expect(content_ids[i]).to.be.equal(burned_ids[i])",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"no msv errors\", function () {",
+									"    pm.expect(jsonData.features.msv.error).to.eql(null);",
+									"});",
+									"",
+									"pm.test(\"source is content_ids_burned\", function () {",
+									"    pm.expect(jsonData.source).to.eql(\"content_ids_burned\");",
+									"});",
+									"",
+									"pm.test(\"There is not fda prediction\", function () {",
+									"    pm.expect(jsonData.features.fda_prediction).to.be.equal(undefined)",
+									"});",
+									"",
+									"pm.test(\"serving return content_ids [23942, 23949, 23947, 23955, 23965]\", function () {",
+									"    pm.expect(jsonData.content_ids[0]);",
+									"    content_ids = jsonData.content_ids",
+									"    burned_ids = [23942, 23949, 23947, 23955, 23965]",
+									"    for (i=0; content_ids.length > i; i++){",
+									"        pm.expect(content_ids[i]).to.be.equal(burned_ids[i])",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"No errors Serving\", function () {",
+									"    pm.expect(Object.keys(jsonData.errors).length).to.equal(0);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-tiger-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 260899898,\n    \"user_text\": \"webtoken\",\n    \"case_data\": {\n        \"payment_id\": 18660355797, \n        \"chat_id\": \"103434643634654454591406590\"\n    }\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_test_serving}}/cx-mld/oneclick/process?site_id=mlb",
+							"host": [
+								"{{url_test_serving}}"
+							],
+							"path": [
+								"cx-mld",
+								"oneclick",
+								"process"
+							],
+							"query": [
+								{
+									"key": "site_id",
+									"value": "mlb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "msv ask_by_agent true -  2da vez",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Msv is false\", function () {",
+									"    pm.expect(jsonData.features.msv.is_msv).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"Ask by agent is true\", function () {",
+									"    pm.expect(jsonData.features.msv.is_ask_by_agent).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Msv second call\", function () {",
+									"    pm.expect(jsonData.features.msv.first_message).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"no msv errors\", function () {",
+									"    pm.expect(jsonData.features.msv.error).to.eql(null);",
+									"});",
+									"",
+									"pm.test(\"serving return content_ids [23942, 23949, 23947, 23955, 23965]\", function () {",
+									"    pm.expect(jsonData.content_ids[0]);",
+									"    content_ids = jsonData.content_ids",
+									"    burned_ids = [23942, 23949, 23947, 23955, 23965]",
+									"    for (i=0; content_ids.length > i; i++){",
+									"        pm.expect(content_ids[i]).to.be.equal(burned_ids[i])",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"source is content_ids_burned\", function () {",
+									"    pm.expect(jsonData.source).to.eql(\"content_ids_burned\");",
+									"});",
+									"",
+									"pm.test(\"serving return content_ids\", function () {",
+									"    pm.expect(jsonData.content_ids[0]);",
+									"});",
+									"",
+									"pm.test(\"There is not fda prediction\", function () {",
+									"    pm.expect(jsonData.features.fda_prediction).to.be.equal(undefined)",
+									"});",
+									"",
+									"pm.test(\"No errors Serving\", function () {",
+									"    pm.expect(Object.keys(jsonData.errors).length).to.equal(0);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-tiger-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 260899898,\n    \"user_text\": \"falar atendente\",\n    \"case_data\": {\n        \"payment_id\": 18660355797, \n        \"chat_id\": \"103434643634654454598706590\"\n    }\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_test_serving}}/cx-mld/oneclick/process?site_id=mlb",
+							"host": [
+								"{{url_test_serving}}"
+							],
+							"path": [
+								"cx-mld",
+								"oneclick",
+								"process"
+							],
+							"query": [
+								{
+									"key": "site_id",
+									"value": "mlb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "msv ask_by_agent true -  1era vez",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Msv is false\", function () {",
+									"    pm.expect(jsonData.features.msv.is_msv).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"Ask by agent is true\", function () {",
+									"    pm.expect(jsonData.features.msv.is_ask_by_agent).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Msv first call\", function () {",
+									"    pm.expect(jsonData.features.msv.first_message).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"no msv errors\", function () {",
+									"    pm.expect(jsonData.features.msv.error).to.eql(null);",
+									"});",
+									"",
+									"pm.test(\"serving return content_ids [26745]\", function () {",
+									"    pm.expect(jsonData.content_ids[0]);",
+									"    pm.expect(jsonData.content_ids[0]).to.be.equal(26745)",
+									"});",
+									"",
+									"pm.test(\"source is ask_for_agent\", function () {",
+									"    pm.expect(jsonData.source).to.equal(\"ask_for_agent\");",
+									"});",
+									"",
+									"pm.test(\"serving return content_ids\", function () {",
+									"    pm.expect(jsonData.content_ids[0]);",
+									"});",
+									"",
+									"pm.test(\"There is not fda prediction\", function () {",
+									"    pm.expect(jsonData.features.fda_prediction).to.be.equal(undefined)",
+									"});",
+									"",
+									"pm.test(\"No errors Serving\", function () {",
+									"    pm.expect(Object.keys(jsonData.errors).length).to.equal(0);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-tiger-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 260899898,\n    \"user_text\": \"falar atendente\",\n    \"case_data\": {\n        \"payment_id\": 18660355797, \n        \"chat_id\": \"103434643634654454798706590\"\n    }\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_test_serving}}/cx-mld/oneclick/process?site_id=mlb",
+							"host": [
+								"{{url_test_serving}}"
+							],
+							"path": [
+								"cx-mld",
+								"oneclick",
+								"process"
+							],
+							"query": [
+								{
+									"key": "site_id",
+									"value": "mlb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "msv agent false y is_msv false -  2da vez",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"No features MSV\", function () {",
+									"    pm.expect(jsonData.features.msv).to.equal(undefined);",
+									"});",
+									"",
+									"",
+									"pm.test(\"source is cdu\", function () {",
+									"    pm.expect(jsonData.source).to.eql(\"cdu\");",
+									"});",
+									"",
+									"pm.test(\"There is fda prediction\", function () {",
+									"    pm.expect(jsonData.features.fda_prediction.process_ids.length).to.greaterThan(0)",
+									"});",
+									"",
+									"pm.test(\"serving return content_ids\", function () {",
+									"    pm.expect(jsonData.content_ids[0]);",
+									"});",
+									"",
+									"pm.test(\"No errors Serving\", function () {",
+									"    pm.expect(Object.keys(jsonData.errors).length).to.equal(0);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-tiger-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 260899898,\n    \"user_text\": \"bom dia galera\",\n    \"case_data\": {\n        \"payment_id\": 18660355797, \n        \"chat_id\": \"103434643634654454598706590\"\n    }\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_test_serving}}/cx-mld/oneclick/process?site_id=mlb",
+							"host": [
+								"{{url_test_serving}}"
+							],
+							"path": [
+								"cx-mld",
+								"oneclick",
+								"process"
+							],
+							"query": [
+								{
+									"key": "site_id",
+									"value": "mlb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "without case_data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"there are payment features\", function () {",
+									"    pm.expect(jsonData.features.payments[0])",
+									"});",
+									"",
+									"",
+									"pm.test(\"No features MSV\", function () {",
+									"    pm.expect(jsonData.features.msv).to.equal(undefined);",
+									"});",
+									"",
+									"",
+									"pm.test(\"source is process\", function () {",
+									"    pm.expect(jsonData.source).to.eql(\"process\");",
+									"});",
+									"",
+									"pm.test(\"serving return content_ids\", function () {",
+									"    pm.expect(jsonData.content_ids[0]);",
+									"});",
+									"",
+									"",
+									"pm.test(\"There is fda prediction\", function () {",
+									"    pm.expect(jsonData.features.fda_prediction.process_ids.length).to.greaterThan(0)",
+									"});",
+									"",
+									"",
+									"pm.test(\"No errors Serving\", function () {",
+									"    pm.expect(Object.keys(jsonData.errors).length).to.equal(0);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-tiger-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 260899898,\n    \"user_text\": \"falar atendente\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_test_serving}}/cx-mld/oneclick/process?site_id=mlb",
+							"host": [
+								"{{url_test_serving}}"
+							],
+							"path": [
+								"cx-mld",
+								"oneclick",
+								"process"
+							],
+							"query": [
+								{
+									"key": "site_id",
+									"value": "mlb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "only payment id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"there are payment features\", function () {",
+									"    pm.expect(jsonData.features.payments[0])",
+									"});",
+									"",
+									"",
+									"pm.test(\"No features MSV\", function () {",
+									"    pm.expect(jsonData.features.msv).to.equal(undefined);",
+									"});",
+									"",
+									"",
+									"pm.test(\"source is process\", function () {",
+									"    pm.expect(jsonData.source).to.eql(\"process\");",
+									"});",
+									"",
+									"pm.test(\"serving return content_ids\", function () {",
+									"    pm.expect(jsonData.content_ids[0]);",
+									"});",
+									"",
+									"",
+									"pm.test(\"There is fda prediction\", function () {",
+									"    pm.expect(jsonData.features.fda_prediction.process_ids.length).to.greaterThan(0)",
+									"});",
+									"",
+									"",
+									"pm.test(\"No errors Serving\", function () {",
+									"    pm.expect(Object.keys(jsonData.errors).length).to.equal(0);",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-tiger-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 260899898,\n    \"user_text\": \"falar atendente\",\n    \"case_data\": {\n        \"payment_id\": 18660355797\n    }\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_test_serving}}/cx-mld/oneclick/process?site_id=mlb",
+							"host": [
+								"{{url_test_serving}}"
+							],
+							"path": [
+								"cx-mld",
+								"oneclick",
+								"process"
+							],
+							"query": [
+								{
+									"key": "site_id",
+									"value": "mlb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cdu re pregunta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-tiger-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 820356573,\n    \"user_text\": \"Como posso pedir limite de crédito\",\n    \"case_data\": {\n        \"payment_id\":\"\", \n        \"chat_id\": \"026\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_test_serving}}/cx-mld/oneclick/process?site_id=mlb",
+							"host": [
+								"{{url_test_serving}}"
+							],
+							"path": [
+								"cx-mld",
+								"oneclick",
+								"process"
+							],
+							"query": [
+								{
+									"key": "site_id",
+									"value": "mlb"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ping",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-tiger-token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://test_cx-serving-oneclick-mld.furyapps.io/ping",
+					"protocol": "http",
+					"host": [
+						"test_cx-serving-oneclick-mld",
+						"furyapps",
+						"io"
+					],
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "prediction",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-tiger-token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"user_id\": 110432463, \n        \"user_text\": \"Fiz transferência via pix e foi agendado pra 10/02/2024 aí cancelei, só dinheiro não voltou pra minha conta mercado pago, oque faço ?\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_dev}}/cx-mld/oneclick/process?site_id=mlb\n",
+					"host": [
+						"{{url_dev}}"
+					],
+					"path": [
+						"cx-mld",
+						"oneclick",
+						"process"
+					],
+					"query": [
+						{
+							"key": "site_id",
+							"value": "mlb\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refresh config",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url_dev}}/refresh_config",
+					"host": [
+						"{{url_dev}}"
+					],
+					"path": [
+						"refresh_config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consumer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"msg\":{\n        \"site\": \"MPM\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_dev}}/cx-mld/oneclick/consumer",
+					"host": [
+						"{{url_dev}}"
+					],
+					"path": [
+						"cx-mld",
+						"oneclick",
+						"consumer"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
