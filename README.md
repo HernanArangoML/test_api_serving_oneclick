@@ -2,7 +2,8 @@
 Automated tests for oneclick serving app mercadopago.
 
 ## Import
-In postman go to File -> Import, select the file json
+Download the file ***cx-serving-oneclick.postman_collection.json***. Open 
+postman and import the file (go to File -> Import)
 
 ## Configuration
 you need to create two variables in configurations in postman
